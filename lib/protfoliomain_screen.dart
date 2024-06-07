@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/Webtab/about_tab.dart';
+import 'package:portfolio/Webtab/techTab.dart.dart';
 
 class ProtfoliomainScreen extends StatefulWidget {
   const ProtfoliomainScreen({super.key});
@@ -81,10 +82,10 @@ class _ProtfoliomainScreenState extends State<ProtfoliomainScreen> {
                           "Full Stack Flutter Expert",
                           style: GoogleFonts.poppins(
                               color: Colors.blue.shade300,
-                              fontSize: 24
+                              fontSize: 26
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height:40),
                         RichText(
                           text: TextSpan(
                             children: [
@@ -108,7 +109,13 @@ class _ProtfoliomainScreenState extends State<ProtfoliomainScreen> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height:20),
+                        Text("Flutter Developer",style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w200,
+                        ),),
+                        SizedBox(height: 20),
                         Container(
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
@@ -128,7 +135,7 @@ class _ProtfoliomainScreenState extends State<ProtfoliomainScreen> {
                               ],
                             )
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height:80),
                         TextButton(
                           onPressed: () {},
                           style: TextButton.styleFrom(
@@ -141,7 +148,7 @@ class _ProtfoliomainScreenState extends State<ProtfoliomainScreen> {
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height:100),
                         Text(
                           '~4 Years Experience    35+ Projects Completed in 10+ Countries    ~110k Content Reach & Views',
                           textAlign: TextAlign.center,
@@ -157,14 +164,14 @@ class _ProtfoliomainScreenState extends State<ProtfoliomainScreen> {
                   SizedBox(width: Get.width / 20),
                   CircleAvatar(
                     radius: 180,
-                    backgroundImage: NetworkImage(
-                        "https://images.news18.com/ibnlive/uploads/2024/03/virat-kohli-new-look-2024-03-6f105a11359bcf373307174cbcf039c9.jpg"), // Add your profile image here
+                    backgroundImage:NetworkImage("https://images.news18.com/ibnlive/uploads/2024/03/virat-kohli-new-look-2024-03-6f105a11359bcf373307174cbcf039c9.jpg"), // Add your profile image here
                   ),
                 ],
               ),
             ),
-            SizedBox(height:100,),
+            SizedBox(height:70,),
             Abouttabs(sectionKey: _aboutKey),
+            Techtab(sectionKey:_techKey),
           ],
         ),
       ),
@@ -184,7 +191,7 @@ class _ProtfoliomainScreenState extends State<ProtfoliomainScreen> {
       child: TextButton(
           onPressed: onPressed,
           child: AnimatedDefaultTextStyle(
-            duration: Duration(milliseconds: 200), style: GoogleFonts.poppins(
+            duration: Duration(milliseconds:200), style: GoogleFonts.poppins(
             color: howerdmenu == title
                 ? Colors.blue.shade300
                 : Colors.white.withOpacity(0.67),
@@ -208,7 +215,7 @@ class _ProtfoliomainScreenState extends State<ProtfoliomainScreen> {
       child: TweenAnimationBuilder(
         tween: Tween<double>(
             begin: 1.0, end: hoveredIcon == icon ? 1.2 : 1.0),
-        duration: const Duration(milliseconds: 200),
+        duration: const Duration(milliseconds:200),
         builder: (context, scale, child) {
           return Transform.scale(
             scale: scale,
@@ -242,5 +249,3 @@ class _ProtfoliomainScreenState extends State<ProtfoliomainScreen> {
     );
   }
 }
-
-
