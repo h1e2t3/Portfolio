@@ -1,115 +1,103 @@
 import 'package:flutter/material.dart';
-import 'package:hovering/hovering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class Techtab extends StatefulWidget {
   const Techtab({super.key, required this.sectionKey});
+
   final GlobalKey sectionKey;
 
   @override
-  State<Techtab> createState() => _TechtabState();
+  _TechtabState createState() => _TechtabState();
 }
 
 class _TechtabState extends State<Techtab> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Tech Stack',
-                style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Change is inevitable, so I keep on exploring new technology, learn it in a minimal possible way and then build something out of it to see how well I did :)',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
-              TechStackCategory(
-                title: 'Mobile development',
-                items: [
-                  'Flutter',
-                  'Dart',
-                ],
-              ),
-              TechStackCategory(
-                title: 'Web development',
-                items: [
-                  'HTML5',
-                  'CSS3',
-                  'Bootstrap',
-                  'Javascript',
-                ],
-              ),
-              TechStackCategory(
-                title: 'Server side',
-                items: [
-                  'Flask Restful',
-                  'Node.js',
-                  'Express.js',
-                  'REST APIs',
-                  'Dart Frog',
-                ],
-              ),
-              TechStackCategory(
-                title: 'Databases',
-                items: [
-                  'Firebase',
-                  'MongoDB',
-                  'Postgres SQL',
-                ],
-              ),
-              TechStackCategory(
-                title: 'Version controlling & management',
-                items: [
-                  'GitHub',
-                  'Jira',
-                  'Trello',
-                  'Notion',
-                ],
-              ),
-              TechStackCategory(
-                title: 'UI/UX Design',
-                items: [
-                  'Figma',
-                  'Adobe XD',
-                ],
-              ),
-            ],
+    return Container(
+      alignment: Alignment.centerLeft,
+      key: widget.sectionKey,
+      padding: EdgeInsets.symmetric(horizontal: 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Tech Stack',
+            style: TextStyle(
+              color: Colors.blue.shade300,
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
+          SizedBox(height:20),
+          Text(
+            'Change is inevitable, so I keep on exploring new technology, learn it in a minimal possible way and then build something out of it to see how well I did :)',
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height:30),
+          TechStackCategory(
+            title: 'Mobile development',
+            items: [
+              'Flutter',
+              'Dart',
+            ], iconnn: [Icons.flutter_dash,FontAwesomeIcons.code],
+          ),
+          TechStackCategory(
+            title: 'Server side',
+            items: [
+              'REST APIs',
+            ], iconnn: [FontAwesomeIcons.server,],
+          ),
+          TechStackCategory(
+            title: 'Databases',
+            items: [
+              'Firebase',
+            ],iconnn: [FontAwesomeIcons.database,],
+          ),
+          TechStackCategory(
+            title: 'Version controlling & management',
+            items: [
+              'GitHub',
+            ],iconnn: [Icons.flutter_dash,],
+          ),
+          TechStackCategory(
+            title: 'UI/UX Design',
+            items: [
+              'Figma',
+            ],iconnn: [Icons.flutter_dash,],
+          ),
+        ],
       ),
     );
   }
 }
 
-class TechStackCategory extends StatelessWidget {
+class TechStackCategory extends StatefulWidget {
   final String title;
   final List<String> items;
+  final List<IconData>? iconnn;
 
-  TechStackCategory({required this.title, required this.items});
+  TechStackCategory({required this.title, required this.items, required this.iconnn});
 
+  @override
+  _TechStackCategoryState createState() => _TechStackCategoryState();
+}
+
+class _TechStackCategoryState extends State<TechStackCategory> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical:20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            widget.title,
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -120,7 +108,15 @@ class TechStackCategory extends StatelessWidget {
           Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: items.map((item) => TechStackItem(name: item)).toList(),
+            children:
+            List.generate(widget.items.length, (index) {
+              return TechStackItem(
+                name: widget.items[index],
+                icons: widget.iconnn != null && widget.iconnn!.length > index
+                    ? widget.iconnn![index]
+                    : null,
+              );
+            }),
           ),
         ],
       ),
@@ -128,43 +124,69 @@ class TechStackCategory extends StatelessWidget {
   }
 }
 
-class TechStackItem extends StatelessWidget {
+class TechStackItem extends StatefulWidget {
   final String name;
+  final IconData?icons;
 
-  TechStackItem({required this.name});
+
+  TechStackItem({required this.name, required this.icons});
+
+  @override
+  _TechStackItemState createState() => _TechStackItemState();
+}
+
+class _TechStackItemState extends State<TechStackItem> {
+  bool _isHovered = false;
+  String? howerdmenu;
 
   @override
   Widget build(BuildContext context) {
-    return HoverWidget(
-      hoverChild: Container(
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.greenAccent,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          name,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-          ),
-        ),
-      ),
-      onHover: (event) {},
+    return MouseRegion(
+      onEnter:(event) =>
+          setState(() {
+            howerdmenu = widget.name;
+          }),
+      onExit: (event) =>
+          setState(() {
+            howerdmenu =null;
+          }),
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.green.withOpacity(0.3),
+          color: howerdmenu != null ? Colors.white : Colors.blue.shade300,
+          boxShadow: [
+            BoxShadow(blurRadius: 8,
+                color: howerdmenu == widget.name
+                    ? Colors.blue.shade300
+                    : Colors.transparent,
+                spreadRadius: 1)
+          ],
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Text(
-          name,
-          style: TextStyle(
-            color: Colors.greenAccent,
-            fontSize: 16,
+        child: SizedBox(
+          width:Get.width/8,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(widget.icons,color: Colors.black,),
+              SizedBox(width: 10,),
+              Text(
+                widget.name,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  void _onHover(bool isHovered) {
+    setState(() {
+      _isHovered = isHovered;
+    });
   }
 }
